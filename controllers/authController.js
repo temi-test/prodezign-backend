@@ -1,19 +1,14 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
-const crypto = require("crypto");
+
 
 const Account = require("../models/accountModel");
 const Verification = require("../models/emailVerificationModel");
 const Enrollment = require("../models/enrollmentModel");
 const sendVerificationEmail = require("../utils/sendEmail");
 
-const randomBytes = crypto.randomBytes(16);
-const CRYPTOKEY = crypto.createCipher(
-  "aes-128-cbc",
-  process.env.FLASHPAY_SECRET,
-  randomBytes
-);
+
 
 // const crypto = require("crypto");
 
