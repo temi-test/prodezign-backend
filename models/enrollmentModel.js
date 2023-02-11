@@ -7,14 +7,12 @@ const enrollmentSchema = new schema(
       type: mongoose.Schema.Types.ObjectId,
       required: [true, "Database Exception. Account Id is required"],
       ref: "account",
-      unique: true,
     },
 
     bootcamp_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: [true, "Database Exception. Bootcamp Id is required"],
-      ref: "bootcamps",
-      unique: true,
+      ref: "bootcamp",
     },
   },
   {

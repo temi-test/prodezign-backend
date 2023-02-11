@@ -2,16 +2,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 
-
 const Account = require("../models/accountModel");
 const Verification = require("../models/emailVerificationModel");
 const Enrollment = require("../models/enrollmentModel");
 const sendVerificationEmail = require("../utils/sendEmail");
 
 
-
 // const crypto = require("crypto");
-
 //// Login in user
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -98,7 +95,7 @@ const login = asyncHandler(async (req, res) => {
   console.log(account);
 
   // Get the courses/bootcamps user has enrolled in
-  let enrollment_result = await Enrollment.find({ user_id: account._id });
+  const enrollment_result = await Enrollment.find({ account_id: account._id  }).populate(["bootcamp_id"]);
   if (!enrollment_result) {
     console.log("server error getting users enrollment");
     return res.status(500).send({
@@ -299,13 +296,15 @@ const readUser = asyncHandler(async (req, res) => {
         message: "No user account matches the Bearer token in database",
       });
     }
-    // console.log("success reading account data");
+    //  console.log("success reading account data");
     // console.log(result);
 
     // Get the courses/bootcamps user has enrolled in
-    const enrollment_result = await Enrollment.find({ user_id: result._id });
-    console.log("enrollment result");
-    console.log(enrollment_result);
+    const enrollment_result = await Enrollment.find({ account_id: result._id  }).populate(["bootcamp_id"]);
+    // console.log("enrollment result");
+    // console.log(enrollment_result);
+
+
     // if (!enrollment_result) {
     //   console.log("server error getting users enrollment");
     //   return res.status(500).send({
@@ -315,6 +314,7 @@ const readUser = asyncHandler(async (req, res) => {
     // }
     res.status(200).send({ account: result, data: enrollment_result });
   } catch (error) {
+    console.log(error);
     res.status(500).send({
       message:
         "Unable to initialize your account due to server error. Please try again",
