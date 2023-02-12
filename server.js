@@ -17,9 +17,10 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const whitelist = ["http://localhost:3000"];
+const prod_whitelist = ["https://prodezign.onrender.com"]
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
+    if (!origin || prod_whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
