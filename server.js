@@ -6,7 +6,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 /// initailizing mongodb connection
 mongoose
-  .connect(process.env.DB_CONN_STRING, {
+  .connect(process.env.CLOUD_DB_CONN_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
